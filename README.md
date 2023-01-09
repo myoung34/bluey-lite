@@ -20,7 +20,7 @@ RP2040 Side (golang - handles the TFT)
 * Install [picotool](https://github.com/raspberrypi/picotool)
 * `$ picotool load -x bluey.uf2`
 
-Arduino side (WIFI + BLE to RP2040 via UART)
+ESP32 side (WIFI + BLE to RP2040 via UART)
 
 * Plug in the esp32-c3 side
 * Set it to bootloader mode by jumping IO9 to GND
