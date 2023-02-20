@@ -13,16 +13,16 @@ import (
 )
 
 var colorMap = map[string]color.RGBA{
-	"blue":  color.RGBA{0, 0, 255, 255},
-	"white": color.RGBA{255, 255, 255, 255},
-	"green": color.RGBA{0, 255, 0, 255},
-	"red":   color.RGBA{255, 0, 0, 255},
-	"black": color.RGBA{0, 0, 0, 255},
+	"blue":   color.RGBA{0, 0, 255, 255},
+	"white":  color.RGBA{255, 255, 255, 255},
+	"green":  color.RGBA{0, 255, 0, 255},
+	"red":    color.RGBA{255, 0, 0, 255},
+	"black":  color.RGBA{0, 0, 0, 255},
 	"orange": color.RGBA{230, 126, 34, 255},
-	"pink": color.RGBA{190, 86, 131, 255},
+	"pink":   color.RGBA{190, 86, 131, 255},
 	"purple": color.RGBA{165, 55, 253, 255},
 	"yellow": color.RGBA{255, 240, 0, 255},
-	"brown": color.RGBA{139, 69, 19, 255},
+	"brown":  color.RGBA{139, 69, 19, 255},
 }
 
 func main() {
@@ -61,6 +61,20 @@ func main() {
 	j := 15
 
 	for {
+
+		held := false
+		led := machine.Pin(25)
+		led.Configure(machine.PinConfig{Mode: machine.PinOutput})
+		led.Low()
+
+		pin := machine.Pin(7)
+		pin.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+		held = !pin.Get()
+		led.Set(held)
+		if held {
+			uart.WriteByte([]byte("$")[0])
+		}
+
 		if uart.Buffered() > 0 {
 			data, _ := uart.ReadByte()
 
@@ -82,7 +96,7 @@ func main() {
 					}
 					tinyfont.WriteLine(&display, &proggy.TinySZ8pt7b, 10, int16(+40), string(input[:i]), colorMap["brown"])
 					j += 10
-		      time.Sleep(1000)
+					time.Sleep(1000)
 				}
 				i = 0
 			default:
@@ -92,5 +106,4 @@ func main() {
 		}
 		time.Sleep(5 * time.Millisecond)
 	}
-
 }

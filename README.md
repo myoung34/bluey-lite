@@ -5,12 +5,20 @@ A Bunch of builds/forks of the tilt hydrometer companion for different micro con
 Currently Right now that is only the `t-picoc3`. If I do more they will be split into subdirectories
 
 ![](assets/tpicoc3.gif)
+![](assets/configuration.png)
 
 T-PicoC3
 ========
 
-For more detailed information [visit my blog post](TODO)
+For more detailed information [visit my blog post](https://marcyoung.us/post/tilt-hydrometer-on-a-tpicoc3/)
 
+## Installation
+
+### The Easy Way
+
+TODO
+
+### The Hard Way
 
 RP2040 Side (golang - handles the TFT)
 
@@ -29,10 +37,18 @@ ESP32 side (WIFI + BLE to RP2040 via UART)
 * Download [micropython for esp32-c3](https://micropython.org/resources/firmware/esp32c3-usb-20220618-v1.19.1.bin)
 * Flash it with micropython: `$ esptool.py --chip esp32c3 --port /dev/ttyACM0 --baud 460800 write_flash -z 0x0 esp32c3-usb-20220618-v1.19.1.bin`
 * Install [thonny](https://thonny.org/)
-* Download [this helpful urequests file](https://raw.githubusercontent.com/pfalcon/pycopy-lib/master/urequests/urequests/__init__.py). Open it in thonny, save it to micropython on the esp32-c3 as `urequests.py`. If you dont plan on sending BLE tilt data to an HTTP source skip this.
+* Download [this helpful urequests file](https://raw.githubusercontent.com/pfalcon/pycopy-lib/master/urequests/urequests/__init__.py). Open it in thonny, save it to micropython on the esp32-c3 as `urequests.py`.
+* Download [Microdot.py](https://github.com/miguelgrinberg/microdot/blob/main/src/microdot.py). This is for the captive portal for configuration.
 * Download the main.py file here and save it as `main.py` on the esp32-c3
   * Make changes to connect to your wifi network
   * Make changes (if wanted) to send BLE tilt data to a webserver
+
+
+## Configuration
+
+While (or right after) plugging in the device, hold the button labeled IO7
+The t-pico will spin up an AP named 'Bluey' that you can wirelessly connect to. You can then browse to http://192.168.4.1 and configure it.
+This information is printed on the LCD screen as well.
 
 You should be good to go!
 
